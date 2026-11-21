@@ -50,7 +50,7 @@
       #gate div { background: rgba(24, 27, 32, 0.97); padding: 18px 22px; border-radius: 8px; max-width: 560px; }
       #gate button { font: inherit; font-size: 15px; padding: 8px 16px; margin-top: 10px; color: #eef1f4; background: #323841; border: 1px solid #111; border-radius: 4px; }
     </style>
-    <script type="module" crossorigin src="./assets/builder-CheRUt0L.js"></script>
+    <script type="module" crossorigin src="./assets/builder-DnlknC4F.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/RoomEnvironment-BkPXbgb7.js">
     <link rel="modulepreload" crossorigin href="./assets/boot-Cg9NTm2a.js">
     <link rel="stylesheet" crossorigin href="./assets/boot-CIqzTADa.css">
@@ -69,7 +69,7 @@
         <b>Builder</b>
         <label>Surveyor <input type="text" id="surveyor" placeholder="your name"></label>
         <label>Snap <select id="snap"><option value="0.1">0.1 m</option><option value="0.3" selected>0.3 m</option><option value="0.5">0.5 m</option><option value="1">1 m</option></select></label>
-        <button id="lookBtn" style="min-width:250px;font-weight:600">Mouse: FREE (click to look)</button>
+        <span id="lookBtn" style="min-width:250px;font-weight:600;padding:4px 8px;border:1px solid #111;border-radius:4px;background:#323841">Mouse: FREE (Tab to look)</span>
         <button id="exportBtn">Export survey + markings</button>
         <button id="undoBtn" disabled>Undo</button>
         <button id="redoBtn" disabled>Redo</button>
@@ -110,7 +110,7 @@
           <li><b>WASD</b> move · <b>V</b> walk or fly · walking: <b>Space</b> jumps · flying: <b>Space / Shift</b> up / down · <b>Ctrl</b> faster</li>
           <li><b>Mouse</b> looks around (click the view first) · <b>Left click</b> place · <b>Right click</b> remove · right-drag looks when the mouse is free</li>
           <li><b>1–9</b> pick an item · <b>F</b> select the item under the aim · <b>Del</b> remove</li>
-          <li><b>Mouse button (top bar)</b> mouse look on / free · <b>Esc</b> also frees the mouse · <b>X</b> cancel a line · <b>Backspace</b> undo the last line point · <b>Del</b> remove selected</li>
+          <li><b>Tab</b> mouse look on / free · <b>Esc</b> frees the mouse · <b>X</b> cancel a line · <b>Backspace</b> undo the last line point · <b>Del</b> remove selected</li>
           <li><b>Ctrl+Z</b> undo · <b>Ctrl+Shift+Z</b> redo (10 steps)</li>
           <li><b>[ ]</b> turn a sign · <b>Q / E</b> turn an arrow · <b>Enter</b> finish a line</li>
         </ul>
@@ -120,7 +120,7 @@
       <div id="gate"><div>
         <b>Builder: the game with a free camera</b>
         <p>This is the same map, the same models and the same rendering as the game. The camera moves freely, so you can walk, fly and look from any angle while you place signs, lights and markings.</p>
-        <p style="color:#aab2bd">Click the top-bar mouse button to look around. <b>WASD</b> move · <b>Space / Shift</b> up / down · <b>Ctrl</b> fast · <b>Wheel</b> speed · <b>Left click</b> place · <b>Right click</b> remove · <b>1–9</b> pick an item · <b>[ ]</b> turn a sign · <b>F</b> select the item you aim at · <b>Del</b> remove selected · <b>X</b> cancel a line · the top-bar mouse button frees or locks the mouse.</p>
+        <p style="color:#aab2bd">Press Tab to look around. <b>WASD</b> move · <b>Space / Shift</b> up / down · <b>Ctrl</b> fast · <b>Wheel</b> speed · <b>Left click</b> place · <b>Right click</b> remove · <b>1–9</b> pick an item · <b>[ ]</b> turn a sign · <b>F</b> select the item you aim at · <b>Del</b> remove selected · <b>X</b> cancel a line · the top-bar mouse button frees or locks the mouse.</p>
         <p style="color:#aab2bd;font-size:12px">Save versions as you go. <b>Export mod</b> writes active.json: copy it to public/mods/active.json and the game applies your signs, lights, lines, zebras, trees and lamps on its next start. Existing signs, lights and markings from the survey file and the map are shown exactly as the game shows them. They are read-only here; you add new ones.</p>
         <button id="startBtn">Start</button>
       </div></div>
