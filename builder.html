@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280" />
+    <meta name="theme-color" content="#f5f5f7" />
+    <title>Builder: Debar Maalo (the game with a free camera)</title>
+    <style>
+      /* the game's own look comes from mapng.css; this only adds the builder panels */
+      .mg-hud { display: none !important; }
+      .mg-count { display: none !important; }
+      .mg-touch, .mg-bar, .mg-tl, .mg-br { display: none !important; } /* driving controls: not used by the builder */
+      #bld { position: fixed; inset: 0; pointer-events: none; font: 13px/1.4 system-ui, sans-serif; color: #eef1f4; z-index: 20; }
+      #bld .panel { pointer-events: auto; position: fixed; background: rgba(24, 27, 32, 0.95); border: 1px solid #000; border-radius: 6px; }
+      #bld button, #bld select, #bld input[type=text], #bld input[type=number] { font: inherit; color: #eef1f4; background: #323841; border: 1px solid #111; border-radius: 4px; padding: 4px 7px; }
+      #bld input[type=number], #bld input[type=text] { width: 82px; background: #1d2228; }
+      #bld button:hover, #bld .item:hover { border-color: #f2b84b; cursor: pointer; }
+      #top { top: 0; left: 0; right: 0; height: 46px; border-radius: 0; display: flex; gap: 10px; align-items: center; padding: 0 12px; }
+      #top b { margin-right: 6px; }
+      #top label { color: #aab2bd; }
+      #inv { top: 56px; left: 12px; bottom: 12px; width: 300px; overflow: auto; padding: 10px; }
+      #inv h4 { margin: 12px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #aab2bd; }
+      #inv h4:first-child { margin-top: 0; }
+      .item { display: flex; gap: 8px; align-items: center; padding: 5px 6px; border: 2px solid transparent; border-radius: 5px; background: #262b33; margin-bottom: 4px; }
+      .item.active { border-color: #f2b84b; }
+      .item canvas { width: 40px; height: 40px; flex: none; }
+      .item .n { flex: 1; }
+      .item small { color: #aab2bd; display: block; }
+      #side { top: 56px; right: 12px; width: 290px; padding: 12px; display: none; max-height: calc(100vh - 80px); overflow: auto; }
+      #side.show { display: block; }
+      #side h3 { margin: 0 0 6px; font-size: 15px; }
+      #side .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 6px 0; }
+      #side textarea { width: 100%; background: #1d2228; color: #eef1f4; border: 1px solid #111; border-radius: 4px; }
+      #crosshair { position: fixed; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px; z-index: 19; pointer-events: none; }
+      #crosshair::before, #crosshair::after { content: ""; position: absolute; background: #fff; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+      #crosshair::before { width: 14px; height: 2px; } #crosshair::after { width: 2px; height: 14px; }
+      #controls { right: 12px; bottom: 12px; width: 300px; padding: 10px 12px; font-size: 12px; }
+      #controls .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 6px 0; }
+      #controls select { font-size: 12px; }
+      #controls ul { margin: 8px 0 0; padding-left: 16px; color: #aab2bd; }
+      .compass-wrap { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+      #compass { position: relative; width: 56px; height: 56px; border-radius: 50%; border: 2px solid #aab2bd; background: #1d2228; flex: none; transition: opacity .15s; }
+      #compass::before { content: "N"; position: absolute; top: 1px; left: 0; right: 0; text-align: center; font-size: 10px; color: #f2b84b; }
+      #needle { position: absolute; left: 50%; top: 50%; width: 3px; height: 22px; margin: -22px 0 0 -1.5px; background: #f2b84b; transform-origin: 50% 100%; border-radius: 2px; }
+      #compassText { color: #eef1f4; }
+      #info { left: 330px; bottom: 12px; padding: 8px 10px; font-size: 12px; color: #aab2bd; max-width: 620px; }
+      #info b { color: #eef1f4; }
+      #msg { position: fixed; top: 64px; left: 50%; transform: translateX(-50%); background: #7a2b2b; padding: 8px 12px; border-radius: 4px; display: none; z-index: 30; pointer-events: none; }
+      #gate { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; z-index: 40; pointer-events: auto; }
+      #gate div { background: rgba(24, 27, 32, 0.97); padding: 18px 22px; border-radius: 8px; max-width: 560px; }
+      #gate button { font: inherit; font-size: 15px; padding: 8px 16px; margin-top: 10px; color: #eef1f4; background: #323841; border: 1px solid #111; border-radius: 4px; }
+    </style>
+    <script type="module" crossorigin src="./assets/builder-C6m_c2rv.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/RoomEnvironment-BkPXbgb7.js">
+    <link rel="modulepreload" crossorigin href="./assets/boot-DP-TKQm1.js">
+    <link rel="stylesheet" crossorigin href="./assets/boot-CIqzTADa.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="loading">
+      <div class="bar"><i></i></div>
+      <div class="pct"></div>
+      <small class="credit">Map data © OpenStreetMap contributors</small>
+      <p class="error-text"></p>
+    </div>
+
+    <div id="bld">
+      <div class="panel" id="top">
+        <b>Builder</b>
+        <label>Surveyor <input type="text" id="surveyor" placeholder="your name"></label>
+        <label>Snap <select id="snap"><option value="0.1">0.1 m</option><option value="0.3" selected>0.3 m</option><option value="0.5">0.5 m</option><option value="1">1 m</option></select></label>
+        <button id="lookBtn">Free camera (click view)</button>
+        <button id="exportBtn">Export survey + markings</button>
+        <button id="undoBtn" disabled>Undo</button>
+        <button id="redoBtn" disabled>Redo</button>
+        <button id="clearBtn">Remove my new items</button>
+        <label>Versions <select id="verSel"></select></label>
+        <button id="saveVer">Save version</button>
+        <button id="loadVer">Load</button>
+        <button id="delVer">Delete</button>
+        <button id="modBtn">Export mod (apply to game)</button>
+      </div>
+      <div class="panel" id="inv"></div>
+      <div class="panel" id="side">
+        <h3 id="ins-title">Nothing selected</h3>
+        <div class="row"><span>Code</span><span id="ins-code"></span></div>
+        <div class="row"><span>Facing (°)</span><input type="number" id="ins-facing" min="0" max="359.9" step="1"></div>
+        <div class="row"><span>Width (m)</span><input type="number" id="ins-width" min="0.02" step="0.01"></div>
+        <div class="row"><span>Verified on site</span><input type="checkbox" id="ins-verified"></div>
+        <div class="row"><span>Note</span></div>
+        <textarea id="ins-note" rows="2"></textarea>
+        <div class="row"><button id="delBtn">Delete selected</button><span style="color:#aab2bd;font-size:12px">or Del</span></div>
+      </div>
+      <div class="panel" id="info"></div>
+      <div class="panel" id="controls">
+        <b>Controls</b>
+        <div class="row"><span>Line direction snap</span>
+          <select id="compassSel"><option value="0">free</option><option value="1">1°</option><option value="5">5°</option><option value="15" selected>15°</option><option value="45">45°</option><option value="90">90°</option></select></div>
+        <div class="row"><span>Mouse sensitivity</span>
+          <select id="sensSel"><option value="0.0005">very precise</option><option value="0.001">precise</option><option value="0.0015" selected>normal</option><option value="0.003">fast</option></select></div>
+        <div class="row"><span>Move speed</span>
+          <select id="speedSel"><option value="2">slow</option><option value="6" selected>normal</option><option value="15">fast</option><option value="40">very fast</option></select></div>
+        <div class="compass-wrap">
+          <div id="compass"><div id="needle"></div></div>
+          <div id="compassText">start a line to see its bearing</div>
+        </div>
+        <ul>
+          <li><b>WASD</b> move · <b>V</b> walk or fly · walking: <b>Space</b> jumps · flying: <b>Space / Shift</b> up / down · <b>Ctrl</b> faster</li>
+          <li><b>Mouse</b> looks around (click the view first) · <b>Left click</b> place · <b>Right click</b> remove · right-drag looks when the mouse is free</li>
+          <li><b>1–9</b> pick an item · <b>F</b> select the item under the aim · <b>Del</b> remove</li>
+          <li><b>Ctrl+Z</b> undo · <b>Ctrl+Shift+Z</b> redo (10 steps)</li>
+          <li><b>[ ]</b> turn a sign · <b>Q / E</b> turn an arrow · <b>Enter</b> finish a line · <b>Backspace</b> undo a point · <b>Esc</b> cancel · <b>Tab</b> free the mouse</li>
+        </ul>
+      </div>
+      <div id="crosshair"></div>
+      <div id="msg"></div>
+      <div id="gate"><div>
+        <b>Builder: the game with a free camera</b>
+        <p>This is the same map, the same models and the same rendering as the game. The camera moves freely, so you can walk, fly and look from any angle while you place signs, lights and markings.</p>
+        <p style="color:#aab2bd">Click <b>Free camera</b>, then click the view. <b>WASD</b> move · <b>Space / Shift</b> up / down · <b>Ctrl</b> fast · <b>Wheel</b> speed · <b>Left click</b> place · <b>Right click</b> remove · <b>1–9</b> pick an item · <b>[ ]</b> turn a sign · <b>F</b> select the item you aim at · <b>Del</b> remove selected · <b>Esc</b> cancel a line · <b>Tab</b> free the mouse.</p>
+        <p style="color:#aab2bd;font-size:12px">Save versions as you go. <b>Export mod</b> writes active.json: copy it to public/mods/active.json and the game applies your signs, lights, lines, zebras, trees and lamps on its next start. Existing signs, lights and markings from the survey file and the map are shown exactly as the game shows them. They are read-only here; you add new ones.</p>
+        <button id="startBtn">Start</button>
+      </div></div>
+    </div>
+
+  </body>
+</html>

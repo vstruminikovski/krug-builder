@@ -1,0 +1,41 @@
+{
+  "type": "FeatureCollection",
+  "name": "prviot_krug_area",
+  "description": "Outline of the 1 km x 1 km map square. Edit only inside this square. Not read by the game; the survey file is public/survey/prviot_krug.geojson.",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Map square (1 km)",
+        "kind": "boundary"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              21.406403607562424,
+              42.0081198283681
+            ],
+            [
+              21.41886132316271,
+              42.0081198283681
+            ],
+            [
+              21.41886132316271,
+              41.998828670911365
+            ],
+            [
+              21.406403607562424,
+              41.998828670911365
+            ],
+            [
+              21.406403607562424,
+              42.0081198283681
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

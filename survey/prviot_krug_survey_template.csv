@@ -1,0 +1,2 @@
+id,kind,code,lat,lon,facing_deg,road_side,source,surveyor,survey_date,verified,widthM,note
+S-001,sign,II-2,,,,right,field survey,,,false,,Example row: delete or replace. kind = sign | light | line | area
