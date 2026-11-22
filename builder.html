@@ -50,10 +50,10 @@
       #gate div { background: rgba(24, 27, 32, 0.97); padding: 18px 22px; border-radius: 8px; max-width: 560px; }
       #gate button { font: inherit; font-size: 15px; padding: 8px 16px; margin-top: 10px; color: #eef1f4; background: #323841; border: 1px solid #111; border-radius: 4px; }
     </style>
-    <script type="module" crossorigin src="./assets/builder-CSiVzFIZ.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/RoomEnvironment-CmEEn0WS.js">
-    <link rel="modulepreload" crossorigin href="./assets/boot-BsYC6Tu9.js">
-    <link rel="stylesheet" crossorigin href="./assets/boot-CIqzTADa.css">
+    <script type="module" crossorigin src="/krug-builder/assets/builder-BSsJ-vVz.js"></script>
+    <link rel="modulepreload" crossorigin href="/krug-builder/assets/RoomEnvironment-CmEEn0WS.js">
+    <link rel="modulepreload" crossorigin href="/krug-builder/assets/boot-Bn7cygHm.js">
+    <link rel="stylesheet" crossorigin href="/krug-builder/assets/boot-CIqzTADa.css">
   </head>
   <body>
     <div id="app"></div>
@@ -84,8 +84,11 @@
       <div class="panel" id="side">
         <h3 id="ins-title">Nothing selected</h3>
         <div class="row"><span>Code</span><span id="ins-code"></span></div>
-        <div class="row"><span>Facing (°)</span><input type="number" id="ins-facing" min="0" max="359.9" step="1"></div>
+        <div class="row"><span>Facing / turn (°)</span><input type="number" id="ins-facing" min="0" max="359.9" step="1"></div>
         <div class="row"><span>Width (m)</span><input type="number" id="ins-width" min="0.02" step="0.01"></div>
+        <div class="row" id="row-plen"><span>Pole length (m)</span><input type="number" id="ins-plen" min="0.02" step="0.05"></div>
+        <div class="row" id="row-pthick"><span>Pole thickness (m)</span><input type="number" id="ins-pthick" min="0.02" step="0.01"></div>
+        <div class="row" id="row-pz"><span>Centre height (m)</span><input type="number" id="ins-pz" step="0.05"></div>
         <div class="row" id="row-timer"><span>Green / yellow / red (s)</span><span><input type="number" id="ins-g" min="1" step="1" style="width:52px"> <input type="number" id="ins-y" min="0" step="0.5" style="width:52px"> <input type="number" id="ins-r" min="1" step="1" style="width:52px"></span></div>
         <div class="row" id="row-offset"><span>Start offset (s)</span><input type="number" id="ins-off" min="0" step="1"></div>
         <div class="row"><span>Verified on site</span><input type="checkbox" id="ins-verified"></div>
