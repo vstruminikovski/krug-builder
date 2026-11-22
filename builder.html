@@ -49,8 +49,13 @@
       #gate { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; z-index: 40; pointer-events: auto; }
       #gate div { background: rgba(24, 27, 32, 0.97); padding: 18px 22px; border-radius: 8px; max-width: 560px; }
       #gate button { font: inherit; font-size: 15px; padding: 8px 16px; margin-top: 10px; color: #eef1f4; background: #323841; border: 1px solid #111; border-radius: 4px; }
+      #rightcol { position: fixed; top: 56px; right: 12px; bottom: 12px; width: 300px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; pointer-events: none; z-index: 20; }
+      #rightcol > .panel { position: relative; top: auto; right: auto; bottom: auto; left: auto; width: auto; max-height: none; flex: none; }
+      #side { display: none; }
+      #side.show { display: block; }
+      #info { left: 330px; right: 330px; bottom: 12px; max-width: none; text-align: center; }
     </style>
-    <script type="module" crossorigin src="/krug-builder/assets/builder-B-0N6QPZ.js"></script>
+    <script type="module" crossorigin src="/krug-builder/assets/builder-BDeqodRp.js"></script>
     <link rel="modulepreload" crossorigin href="/krug-builder/assets/RoomEnvironment-Cb9rR_Vg.js">
     <link rel="modulepreload" crossorigin href="/krug-builder/assets/boot-DHRrx8DV.js">
     <link rel="stylesheet" crossorigin href="/krug-builder/assets/boot-CIqzTADa.css">
@@ -81,6 +86,7 @@
         <button id="modBtn">Export mod (apply to game)</button>
       </div>
       <div class="panel" id="inv"></div>
+      <div id="rightcol">
       <div class="panel" id="side">
         <h3 id="ins-title">Nothing selected</h3>
         <div class="row"><span>Code</span><span id="ins-code"></span></div>
@@ -96,7 +102,6 @@
         <textarea id="ins-note" rows="2"></textarea>
         <div class="row"><button id="delBtn">Delete selected</button><span style="color:#aab2bd;font-size:12px">or Del</span></div>
       </div>
-      <div class="panel" id="info"></div>
       <div class="panel" id="controls">
         <b>Controls</b>
         <div class="row"><span>Line direction snap</span>
@@ -112,6 +117,7 @@
           <div id="compass"><div id="needle"></div></div>
           <div id="compassText">start a line to see its bearing</div>
         </div>
+        <details><summary style="cursor:pointer;color:#aab2bd;margin-top:6px">Keys</summary>
         <ul>
           <li><b>WASD</b> move · <b>V</b> walk or fly · walking: <b>Space</b> jumps · flying: <b>Space / Shift</b> up / down · <b>Ctrl</b> faster</li>
           <li><b>Mouse</b> looks around (click the view first) · <b>Left click</b> place · <b>Right click</b> remove · right-drag looks when the mouse is free</li>
@@ -119,8 +125,10 @@
           <li><b>C</b> mouse look on / free · <b>X</b> cancel a line · <b>Backspace</b> undo the last line point · <b>Del</b> remove selected</li>
           <li><b>Ctrl+Z</b> undo · <b>Ctrl+Shift+Z</b> redo (10 steps)</li>
           <li><b>[ ]</b> turn a sign · <b>Q / E</b> turn an arrow · <b>Enter</b> finish a line</li>
-        </ul>
+        </ul></details>
       </div>
+      </div>
+      <div class="panel" id="info"></div>
       <div id="crosshair"></div>
       <div id="msg"></div>
       <div id="gate"><div>
