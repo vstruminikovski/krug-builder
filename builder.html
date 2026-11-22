@@ -57,9 +57,9 @@
       #side.show { display: block; }
       #info { left: 330px; right: 330px; bottom: 12px; max-width: none; text-align: center; }
     </style>
-    <script type="module" crossorigin src="/krug-builder/assets/builder-DoERiSj7.js"></script>
-    <link rel="modulepreload" crossorigin href="/krug-builder/assets/RoomEnvironment-Cb9rR_Vg.js">
-    <link rel="modulepreload" crossorigin href="/krug-builder/assets/boot-DHRrx8DV.js">
+    <script type="module" crossorigin src="/krug-builder/assets/builder-JkIQQwtD.js"></script>
+    <link rel="modulepreload" crossorigin href="/krug-builder/assets/RoomEnvironment-BpPnfODz.js">
+    <link rel="modulepreload" crossorigin href="/krug-builder/assets/boot-C-Dq1I51.js">
     <link rel="stylesheet" crossorigin href="/krug-builder/assets/boot-CIqzTADa.css">
   </head>
   <body>
@@ -89,6 +89,13 @@
       </div>
       <div class="panel" id="inv"></div>
       <div id="rightcol">
+      <div class="panel" id="project">
+        <b>Your work</b>
+        <div id="saveStatus" style="font-size:12px;margin:4px 0 6px;color:#9fd8a8">Starting…</div>
+        <div class="row"><button id="saveProj">Save project file</button><button id="openProjBtn">Open file…</button></div>
+        <input type="file" id="openProj" accept=".json,application/json" style="display:none">
+        <small style="color:#aab2bd">Kept in this browser at this address. Save a project file to take it to another browser or address; open it again any time.</small>
+      </div>
       <div class="panel" id="side">
         <h3 id="ins-title">Nothing selected</h3>
         <div class="row"><span>Code</span><span id="ins-code"></span></div>
